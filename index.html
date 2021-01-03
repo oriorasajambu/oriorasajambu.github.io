@@ -24,9 +24,18 @@
       $.get("tools/sidebar.php", '', function (data) { $("#content-wrapper").before(data); });
       $.get("tools/topbar.php", '', function (data) { $(".container-fluid").before(data); });
       $.get("tools/footer.php", '', function (data) { $("#content").after(data); });
-      $(function(){
-        $(".container-fluid").empty();
+      var split = location.search.replace('?', '').split('&').map(function(val){
+        return val.split('=');
       });
+      if(split !== undefined && split !== null){
+        var pages = split[0][1];
+        $.get("pages/"+pages+".php", '', function (data) {
+          $(".container-fluid").empty();
+          if(pages == "") $.get("pages/404.php", '', function (data) { $(".container-fluid").append(data); });
+          else $(".container-fluid").append(data);
+        });
+      }
+      else $.get("pages/dashboard.php", '', function (data) { $(".container-fluid").append(data); });
     });
   </script>
 
@@ -44,30 +53,7 @@
       <div id="content">
 
         <!-- Begin Page Content -->
-        <div class="container-fluid">
-
-          <?php
-
-            if(isset($_GET['pages'])){
-              $pages = $_GET['pages'];
-              if($pages == "dashboard") include_once "pages/dashboard.php";
-              else if($pages == "buttons") include_once "pages/buttons.php";
-              else if($pages == "cards") include_once "pages/cards.php";
-              else if($pages == "colors") include_once "pages/colors.php";
-              else if($pages == "borders") include_once "pages/borders.php";
-              else if($pages == "animations") include_once "pages/animations.php";
-              else if($pages == "others") include_once "pages/others.php";
-              else if($pages == "blank") include_once "pages/blank.php";
-              else if($pages == "charts") include_once "pages/charts.php";
-              else if($pages == "tables") include_once "pages/tables.php";
-              else include_once "pages/404.php";
-            }
-            else include_once "pages/dashboard.php";
-
-           ?>
-           <p>asd</p>
-
-        </div>
+        <div class="container-fluid"></div>
         <!-- /.container-fluid -->
 
       </div>
@@ -101,17 +87,6 @@
   <!-- Page level plugins -->
   <script src="vendor/chart.js/Chart.min.js"></script>
 
-  <!-- Page level custom scripts -->
-  <script src="js/demo/chart-area-demo.js"></script>
-  <script src="js/demo/chart-pie-demo.js"></script>
-  <script src="js/demo/chart-bar-demo.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="js/demo/datatables-demo.js"></script>
-
-  <!-- Page level plugins -->
-  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 </body>
 
 </html>
