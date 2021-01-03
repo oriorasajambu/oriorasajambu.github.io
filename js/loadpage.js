@@ -10,6 +10,7 @@ $(function(){
   if(split != "null"){
     if(split[0][1] && split[0][1] != 'u'){
       var pages = split[0][1];
+      alert('pages:'+pages);
       $.get("pages/"+pages+".html", '', function (data) {
         $(".container-fluid").empty();
         $(".container-fluid").append(data);
