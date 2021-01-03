@@ -21,21 +21,25 @@
   <script src="vendor/jquery/jquery.js"></script>
   <script>
     $(function(){
-      $.get("tools/sidebar.php", '', function (data) { $("#content-wrapper").before(data); });
-      $.get("tools/topbar.php", '', function (data) { $(".container-fluid").before(data); });
-      $.get("tools/footer.php", '', function (data) { $("#content").after(data); });
+      $.get("tools/sidebar.html", '', function (data) { $("#content-wrapper").before(data); });
+      $.get("tools/topbar.html", '', function (data) { $(".container-fluid").before(data); });
+      $.get("tools/footer.html", '', function (data) { $("#content").after(data); });
+      $.get("tools/logoutmodal.html", '', function (data) { $("#page-top").after(data); });
       var split = location.search.replace('?', '').split('&').map(function(val){
+        if(val.length <= 0) return "null";
         return val.split('=');
       });
-      if(split !== undefined && split !== null){
-        var pages = split[0][1];
-        $.get("pages/"+pages+".php", '', function (data) {
-          $(".container-fluid").empty();
-          if(pages == "") $.get("pages/404.php", '', function (data) { $(".container-fluid").append(data); });
-          else $(".container-fluid").append(data);
-        });
+      if(typeof split !== "null"){
+        if(split[0][1]){
+          var pages = split[0][1];
+          $.get("pages/"+pages+".html", '', function (data) {
+            $(".container-fluid").empty();
+            $(".container-fluid").append(data);
+          });
+        }
+        else $.get("pages/404.html", '', function (data) { $(".container-fluid").append(data); });
       }
-      else $.get("pages/dashboard.php", '', function (data) { $(".container-fluid").append(data); });
+      else $.get("pages/dashboard.html", '', function (data) { $(".container-fluid").append(data); });
     });
   </script>
 
@@ -69,10 +73,6 @@
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
-
-  <!-- Logout Modal-->
-  <?php include_once "tools/logoutmodal.php" ?>
-  <!-- Logout Modal-->
 
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
