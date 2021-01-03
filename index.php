@@ -18,6 +18,17 @@
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
+  <script src="vendor/jquery/jquery.js"></script>
+  <script>
+    $(function(){
+      $.get("tools/sidebar.php", '', function (data) { $("#content-wrapper").before(data); });
+      $.get("tools/topbar.php", '', function (data) { $(".container-fluid").before(data); });
+      $.get("tools/footer.php", '', function (data) { $("#content").after(data); });
+      $(function(){
+        $(".container-fluid").empty();
+      });
+    });
+  </script>
 
 </head>
 
@@ -26,48 +37,41 @@
   <!-- Page Wrapper -->
   <div id="wrapper">
 
-    <!-- Sidebar -->
-    <?php include_once "tools/sidebar.php" ?>
-    <!-- End of Sidebar -->
-
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
       <!-- Main Content -->
       <div id="content">
 
-        <!-- Topbar -->
-        <?php include_once "tools/topbar.php" ?>
-        <!-- End of Topbar -->
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
 
-        <!-- Content -->
-        <?php
+          <?php
 
-          if(isset($_GET['pages'])){
-            $pages = $_GET['pages'];
-            if($pages == "dashboard") include_once "pages/dashboard.php";
-            else if($pages == "buttons") include_once "pages/buttons.php";
-            else if($pages == "cards") include_once "pages/cards.php";
-            else if($pages == "colors") include_once "pages/colors.php";
-            else if($pages == "borders") include_once "pages/borders.php";
-            else if($pages == "animations") include_once "pages/animations.php";
-            else if($pages == "others") include_once "pages/others.php";
-            else if($pages == "blank") include_once "pages/blank.php";
-            else if($pages == "charts") include_once "pages/charts.php";
-            else if($pages == "tables") include_once "pages/tables.php";
-            else include_once "pages/404.php";
-          }
-          else include_once "pages/dashboard.php";
+            if(isset($_GET['pages'])){
+              $pages = $_GET['pages'];
+              if($pages == "dashboard") include_once "pages/dashboard.php";
+              else if($pages == "buttons") include_once "pages/buttons.php";
+              else if($pages == "cards") include_once "pages/cards.php";
+              else if($pages == "colors") include_once "pages/colors.php";
+              else if($pages == "borders") include_once "pages/borders.php";
+              else if($pages == "animations") include_once "pages/animations.php";
+              else if($pages == "others") include_once "pages/others.php";
+              else if($pages == "blank") include_once "pages/blank.php";
+              else if($pages == "charts") include_once "pages/charts.php";
+              else if($pages == "tables") include_once "pages/tables.php";
+              else include_once "pages/404.php";
+            }
+            else include_once "pages/dashboard.php";
 
-         ?>
-        <!-- Content -->
+           ?>
+           <p>asd</p>
+
+        </div>
+        <!-- /.container-fluid -->
 
       </div>
       <!-- End of Main Content -->
-
-      <!-- Footer -->
-      <?php include_once "tools/footer.php" ?>
-      <!-- End of Footer -->
 
     </div>
     <!-- End of Content Wrapper -->
@@ -108,7 +112,6 @@
   <!-- Page level plugins -->
   <script src="vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
 </body>
 
 </html>
